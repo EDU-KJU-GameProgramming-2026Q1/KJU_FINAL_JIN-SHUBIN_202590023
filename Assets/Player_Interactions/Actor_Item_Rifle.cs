@@ -33,7 +33,7 @@ public class Actor_Item_Rifle : InterfaceBase_IItem
 
     private void Fire()
     {
-        Debug.Log("Rifle Shoot!");
+        Debug.Log("탕! (라이플 연사)");
         // 실제 발사 로직 (Raycast 등)
     }
 

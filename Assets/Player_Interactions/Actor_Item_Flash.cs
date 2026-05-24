@@ -12,12 +12,12 @@ public class Actor_Item_Flash : InterfaceBase_IItem
     public override void OnUse()
     {
         spotLight.enabled = true;
-        Debug.Log($"Flash Light {(spotLight.enabled ? "On" : "Off")}");
+        Debug.Log($"플래시 {(spotLight.enabled ? "켜짐" : "꺼짐")}");
     }
 
     public override void OnStopUse()
     {
         spotLight.enabled = false;
-        Debug.Log($"Flash Light {(spotLight.enabled ? "On" : "Off")}");
+        Debug.Log($"플래시 {(spotLight.enabled ? "켜짐" : "꺼짐")}");
     }
 }

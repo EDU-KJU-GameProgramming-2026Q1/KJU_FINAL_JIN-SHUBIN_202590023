@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e67456fd2d24493b8ada8f6e2f58dc, type: 3}
   m_Name: SO_Item_Camera
   m_EditorClassIdentifier: 
-  Name: Camera
-  FireRate: 0.1
+  Name: "\uCE74\uBA54\uB77C"
   Type: 2
   Icon: {fileID: 0}
   Prefab: {fileID: 0}

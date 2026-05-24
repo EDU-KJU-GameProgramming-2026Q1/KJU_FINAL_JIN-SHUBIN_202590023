@@ -7,7 +7,7 @@ public class InterfaceBase_IItem : Actor_Grabable, IItem
     protected Transform itemHolder;
 
     // 아이템 모드 전용 설정
-    public Vector3 ItemUseOffset = new Vector3(0.2f, -0.2f, 0.4f); // 화면 우하단 배치 등
+    public Vector3 ItemOffset = new Vector3(0.2f, -0.2f, 0.4f); // 화면 우하단 배치 등
 
     void Start()
     {
@@ -16,23 +16,23 @@ public class InterfaceBase_IItem : Actor_Grabable, IItem
 
     public virtual void OnAdd()
     {
-        Debug.Log($"<color=green>[InterfaceBase_IItem]</color> Added {itemData.Name}");
+        Debug.Log($"<color=green>[InterfaceBase_IItem]</color> {itemData.Name} 아이템 추가");
     }
     public virtual void OnUse()
     {
-        Debug.Log($"<color=green>[InterfaceBase_IItem]</color> Using {itemData.Name}");
+        Debug.Log($"<color=green>[InterfaceBase_IItem]</color> {itemData.Name} 메인 기능 실행");
     }
 
     public virtual void OnStopUse()
     {
-        Debug.Log($"<color=green>[InterfaceBase_IItem]</color> Stopped Using {itemData.Name}");
+        Debug.Log($"<color=green>[InterfaceBase_IItem]</color> {itemData.Name} 사용 중지");
     }
     public virtual void OnEquip(GameObject itemHolder)
     {
         // [추가] itemData가 없는 경우 에러 방지
         if (itemData == null)
         {
-            Debug.LogError($"{gameObject.name}의 ItemData가 할당되지 않았습니다!");
+            Debug.LogError($"<color=green>[InterfaceBase_IItem]</color> {gameObject.name}의 ItemData가 할당되지 않았습니다!");
             return;
         }
 
@@ -43,10 +43,11 @@ public class InterfaceBase_IItem : Actor_Grabable, IItem
         }
 
         transform.SetParent(itemHolder.transform);
-        transform.localPosition = ItemUseOffset;
+        transform.localPosition = ItemOffset;
+        //transform.localPosition = itemHolder.transform.position;
         transform.localRotation = Quaternion.identity;
 
-        Debug.Log($"<color=green>[InterfaceBase_IItem]</color> Equiped {itemData.Name}");
+        Debug.Log($"<color=green>[InterfaceBase_IItem]</color> OnEquip: {itemData.Name}이 손에 고정되었습니다");
     }
     /*
     public virtual void OnEquip(GameObject itemHolder) // itemHolder = 장착/고정할 대상
@@ -76,12 +77,12 @@ public class InterfaceBase_IItem : Actor_Grabable, IItem
         //    grabActor.Act_Release();
         //}
         Act_Release();
-        Debug.Log($"<color=green>[InterfaceBase_IItem]</color> UnEquiped {itemData.Name}");
+        Debug.Log($"<color=green>[ItemBsse]</color> {itemData.Name} 장착 해제");
     }
 
     public virtual void OnDrop(GameObject sender) // sender = 대상을 장착/고정하는 Holder
     {
-        Debug.Log($"<color=green>[InterfaceBase_IItem]</color> Dropped {itemData.Name}");
+        Debug.Log($"<color=green>[ItemBsse]</color> {itemData.Name} 드롭");
         if (TryGetComponent<Rigidbody>(out var rb))
         {
             rb.isKinematic = false;
