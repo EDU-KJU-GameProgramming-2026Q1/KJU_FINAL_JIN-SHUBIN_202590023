@@ -17,8 +17,8 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
-        if (ScoreManager.Instance != null) ScoreManager.Instance.currentHealth = maxHealth;
-        if (ScoreManager.Instance != null) ScoreManager.Instance.AddPlayerHealth(0);
+        ScoreManager.Instance.currentHealth = maxHealth;
+        ScoreManager.Instance.AddPlayerHealth(0);
     }
 
     void OnEnable()
@@ -34,7 +34,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damageAmount;
         Debug.Log($"[Player] 피격! 남은 체력: {currentHealth}/{maxHealth}");
         //ScoreManager.Instance.AddScore(-10);
-        if (ScoreManager.Instance != null) ScoreManager.Instance.AddPlayerHealth(-damageAmount);
+        ScoreManager.Instance.AddPlayerHealth(-damageAmount);
         if (currentHealth <= 0)
         {
             Die();
@@ -52,7 +52,7 @@ public class PlayerHealth : MonoBehaviour
 
         // TODO: 여기에 게임 오버 UI 띄우기 등의 로직을 추가하세요.
 
-        if (ScoreManager.Instance != null) ScoreManager.Instance.ShowGameOverMenu(true);
+        ScoreManager.Instance.ShowGameOverMenu(true);
     }
 
     public void Reset()

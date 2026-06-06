@@ -19,7 +19,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
-        if (ScoreManager.Instance != null) ScoreManager.Instance.currentDestroy = 0;        
+        ScoreManager.Instance.currentDestroy = 0;        
     }
 
     // 데미지를 받는 함수

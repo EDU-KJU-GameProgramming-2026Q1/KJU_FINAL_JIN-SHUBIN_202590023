@@ -20,9 +20,17 @@ public class ScoreManager : MonoBehaviour
 
     public GameObject GameOverUI;
 
+    //////////////////////////////////
+    public GameObject GameClearUI;
+    //////////////////////////////////
+
     public GameObject PlayerHealthBar;
 
     int NumOfEnemies;
+
+    //////////////////////////////////
+    public bool isShowGameOverUI = false;
+    //////////////////////////////////
 
     private void Awake()
     {
@@ -30,7 +38,6 @@ public class ScoreManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            //DontDestroyOnLoad(gameObject); // 씬이 바뀌어도 점수 유지 (필요 시)
         }
         else
         {
@@ -46,12 +53,17 @@ public class ScoreManager : MonoBehaviour
         PlayerHealthText.text = "Player Health: " + currentHealth.ToString("F0"); // 00 형태로 표시
         EnemyDestroyedText.text = "Enemy Destroyed: " + currentDestroy.ToString("D2") + "/" + NumOfEnemies; // 00 형태로 표시
 
-        ShowCursor(false);
+        //////////////////////////////////
+        ShowCursor(isShowGameOverUI);
+        //////////////////////////////////
     }
 
     void OnEnable()
     {
-        ShowGameOverMenu(false);   
+        //////////////////////////////////
+        ShowGameOverMenu(isShowGameOverUI);
+        //////////////////////////////////
+
     }
 
     // 점수를 추가하는 전역 함수
@@ -77,6 +89,10 @@ public class ScoreManager : MonoBehaviour
         Debug.Log($"[ScoreManager] Enemy Destroyed: {currentDestroy}");
         //EnemyDestroyedText.text = "Enemy Destroyed: " + currentDestroy.ToString("D2"); // 00 형태로 표시
         EnemyDestroyedText.text = "Enemy Destroyed: " + currentDestroy.ToString("D2") + "/" + NumOfEnemies; // 00 형태로 표시
+
+        //////////////////////////////////
+        if (currentDestroy >= NumOfEnemies) ShowGameClearMenu(true);
+        //////////////////////////////////
     }
 
     public void ShowGameOverMenu(bool isShow)
@@ -84,6 +100,15 @@ public class ScoreManager : MonoBehaviour
         ShowCursor(isShow);
         GameOverUI.SetActive(isShow);
     }
+
+    //////////////////////////////////
+    public void ShowGameClearMenu(bool isShow)
+    {
+        ShowCursor(isShow);
+        GameClearUI.SetActive(isShow);
+        PlayerManager.Instance.CurrentInteractionState = PlayerInteractionState.Idle;
+    }
+    //////////////////////////////////
 
     public void QuitGame()
     {
@@ -139,7 +164,6 @@ public class ScoreManager : MonoBehaviour
         else
         {
             PlayerHealthBar.transform.Find("Fill Area").gameObject.SetActive(false);  
-            // PlayerHealthBar.transform.GetChild(1).gameObject.SetActive(false);  
         }
         
     }
