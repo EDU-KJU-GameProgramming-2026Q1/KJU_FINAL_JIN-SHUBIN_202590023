@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class Actor_Pistol : InterfaceBase_IItem
 {
@@ -8,29 +9,102 @@ public class Actor_Pistol : InterfaceBase_IItem
     public float BulletSpeed = 100f;
     public float BulletDamage = 1f;
 
+    [Header("Reload Settings")]
+    public int maxAmmoInMag = 12;
+    public float reloadTime = 1f;
+
+    [Header("UI Reference")]
+    public TextMeshProUGUI reloadTipText;
+    public GameObject crosshair;
+    public TextMeshProUGUI ammoText;
+
+    private int currentAmmoInMag;
+    private bool isReloading = false;
+
+    void Start()
+    {
+        currentAmmoInMag = maxAmmoInMag;
+        UpdateAmmoUI();
+
+        if (reloadTipText != null) reloadTipText.text = "";
+        if (crosshair != null) crosshair.SetActive(true);
+    }
+
+    void UpdateAmmoUI()
+    {
+        if (ammoText != null)
+            ammoText.text = $"Pistol: {currentAmmoInMag} / {maxAmmoInMag}";
+    }
 
     public override void OnUse()
     {
-        Fire();
+        if (!isReloading && currentAmmoInMag > 0)
+        {
+            Fire();
+        }
+    }
+
+    public override void OnStopUse()
+    {
+        // 空实现，防止报错
+    }
+
+    void Update()
+    {
+        if (isReloading) return;
+
+        if (Input.GetKeyDown(KeyCode.R) && currentAmmoInMag < maxAmmoInMag)
+        {
+            Reload();
+            return;
+        }
+
+        if (currentAmmoInMag <= 0)
+        {
+            Reload();
+        }
     }
 
     void Fire()
     {
-        Debug.Log("탕! (피스톨 단사)");
-        // 총구의 위치와 회전값을 그대로 가져옵니다 (이미 월드 기준 좌표임)
+        currentAmmoInMag--;
+        UpdateAmmoUI();
+
         Vector3 pos = FirePoint.position;
         Quaternion dir = FirePoint.rotation;
 
         GameObject bulletClone = Instantiate(Bullet, pos, dir);
         bulletClone.GetComponent<Actor_Bullet>().SetDamage(BulletDamage);
-        
+
         Rigidbody rb = bulletClone.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            // 총구가 바라보는 앞방향(forward)으로 발사
             rb.AddForce(FirePoint.forward * BulletSpeed, ForceMode.VelocityChange);
         }
 
         Destroy(bulletClone, 2f);
+    }
+
+    void Reload()
+    {
+        if (isReloading) return;
+
+        isReloading = true;
+        if (reloadTipText != null)
+            reloadTipText.text = "Pistol Reloading...";
+
+        if (crosshair != null) crosshair.SetActive(false);
+
+        Invoke(nameof(FinishReload), reloadTime);
+    }
+
+    void FinishReload()
+    {
+        currentAmmoInMag = maxAmmoInMag;
+        UpdateAmmoUI();
+
+        isReloading = false;
+        if (reloadTipText != null) reloadTipText.text = "";
+        if (crosshair != null) crosshair.SetActive(true);
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class Actor_Rifle : InterfaceBase_IItem
 {
@@ -8,16 +9,40 @@ public class Actor_Rifle : InterfaceBase_IItem
     public float BulletSpeed = 100f;
     public float BulletDamage = 5f;
 
+    [Header("Reload Options")]
+    public int maxAmmoInMag = 30;
+    public float reloadTime = 1.5f;
+
+    [Header("UI Reference")]
+    public TextMeshProUGUI reloadTipText;
+    public GameObject crosshair;
+    public TextMeshProUGUI ammoText;
+
+    private int currentAmmoInMag;
+    private bool isReloading = false;
     private bool isFiring = false;
     private float lastFireTime;
 
-    // 1. 발사 시작 (ItemBehavior에서 호출됨)
+    void Start()
+    {
+        currentAmmoInMag = maxAmmoInMag;
+        UpdateAmmoUI();
+
+        if (reloadTipText != null) reloadTipText.text = "";
+        if (crosshair != null) crosshair.SetActive(true);
+    }
+
+    void UpdateAmmoUI()
+    {
+        if (ammoText != null)
+            ammoText.text = $"Rifle: {currentAmmoInMag} / {maxAmmoInMag}";
+    }
+
     public override void OnUse()
     {
         isFiring = true;
     }
 
-    // 2. 발사 중단 (아이템을 뗄 때 호출되도록 부모에 정의되어 있어야 함)
     public override void OnStopUse()
     {
         isFiring = false;
@@ -25,35 +50,67 @@ public class Actor_Rifle : InterfaceBase_IItem
 
     private void Update()
     {
-        // 마우스 버튼을 누르고 있는 상태라면
-        if (isFiring)
+        if (isReloading) return;
+
+        if (Input.GetKeyDown(KeyCode.R) && currentAmmoInMag < maxAmmoInMag)
         {
-            // 발사 간격 체크 (itemData에 FireRate가 있다고 가정)
-            if (Time.time >= lastFireTime + itemData.FireRate)
-            {
-                Fire();
-                lastFireTime = Time.time;
-            }
+            Reload();
+            return;
+        }
+
+        if (currentAmmoInMag <= 0)
+        {
+            Reload();
+            return;
+        }
+
+        if (isFiring && Time.time >= lastFireTime + itemData.FireRate)
+        {
+            Fire();
+            lastFireTime = Time.time;
         }
     }
 
     void Fire()
     {
-        //Debug.Log("탕! (라이플 연사)");
-        // 총구의 위치와 회전값을 그대로 가져옵니다 (이미 월드 기준 좌표임)
+        currentAmmoInMag--;
+        UpdateAmmoUI();
+
         Vector3 pos = FirePoint.position;
         Quaternion dir = FirePoint.rotation;
 
         GameObject bulletClone = Instantiate(Bullet, pos, dir);
         bulletClone.GetComponent<Actor_Bullet>().SetDamage(BulletDamage);
-        
+
         Rigidbody rb = bulletClone.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            // 총구가 바라보는 앞방향(forward)으로 발사
             rb.AddForce(FirePoint.forward * BulletSpeed, ForceMode.VelocityChange);
         }
 
         Destroy(bulletClone, 2f);
+    }
+
+    void Reload()
+    {
+        if (isReloading) return;
+
+        isReloading = true;
+        if (reloadTipText != null)
+            reloadTipText.text = "Rifle Reloading...";
+
+        if (crosshair != null) crosshair.SetActive(false);
+
+        Invoke(nameof(FinishReload), reloadTime);
+    }
+
+    void FinishReload()
+    {
+        currentAmmoInMag = maxAmmoInMag;
+        UpdateAmmoUI();
+
+        isReloading = false;
+        if (reloadTipText != null) reloadTipText.text = "";
+        if (crosshair != null) crosshair.SetActive(true);
     }
 }

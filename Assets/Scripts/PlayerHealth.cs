@@ -4,7 +4,7 @@ public class PlayerHealth : MonoBehaviour
 {
     [Header("Player Health Options")]
     public float maxHealth = 100f;
-    private float currentHealth;
+    public float currentHealth;
 
     private bool isDead = false;
 
