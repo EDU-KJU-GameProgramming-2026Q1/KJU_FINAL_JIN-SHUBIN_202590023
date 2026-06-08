@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum ItemType { Weapon, Flashlight, Camera, Album, Consumable }
+public enum ItemType { Weapon, Flashlight, Camera, Album, Consumable,Shield }
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Scriptable Object/ItemData")]
 public class ItemData : ScriptableObject

@@ -80,7 +80,7 @@ public class Actor_Enemy : MonoBehaviour
                 // 공격 대기 시 정지 혹은 순찰 로직 배치 가능
                 enemyShooter.SetFire(false);
                 break;
-            
+
 
             case EnemyState.Attack:
                 // Debug.Log($"[Actor_Enemy] LookAtTarget");
@@ -101,7 +101,7 @@ public class Actor_Enemy : MonoBehaviour
         // Debug.Log($"[Actor_Enemy] LookAtTarget");
         // 대상 방향 벡터 구하기 (Y축 높이는 같게 맞추어 넘어짐 방지)
         Vector3 direction = (targetPosition - transform.position).normalized;
-        direction.y = 0; 
+        direction.y = 0;
 
         if (direction != Vector3.zero)
         {

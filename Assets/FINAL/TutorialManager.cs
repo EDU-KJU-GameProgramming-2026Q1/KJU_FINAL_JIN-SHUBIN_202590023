@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement; // 必须加这个才能跳转场景
+using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -15,14 +15,23 @@ public class TutorialManager : MonoBehaviour
 
     void Start()
     {
-        // 绑定按钮事件
+        // 运行开局强制隐藏面板，双重保险
+        if (tutorialPanel != null)
+            tutorialPanel.SetActive(false);
+
+        // 清空按钮所有旧绑定，避免Inspector手动绑定和代码冲突
+        startButton.onClick.RemoveAllListeners();
+        continueButton.onClick.RemoveAllListeners();
+
+        // 保留你原本的绑定代码，完全不删除
         startButton.onClick.AddListener(ShowTutorial);
         continueButton.onClick.AddListener(GoToGameScene);
     }
 
-    // 点击Start → 显示规则
+    // 点击Start → 显示规则面板
     public void ShowTutorial()
     {
+        Debug.Log("Start按钮已点击，打开教程面板");
         tutorialPanel.SetActive(true);
     }
 

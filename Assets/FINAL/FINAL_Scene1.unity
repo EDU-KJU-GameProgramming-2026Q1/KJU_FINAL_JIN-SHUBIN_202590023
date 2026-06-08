@@ -505,7 +505,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 157.1, y: 190}
+  m_AnchoredPosition: {x: 157.1, y: 209.2}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &441050782
@@ -1294,8 +1294,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 290303219}
-  - {fileID: 2122919622}
   - {fileID: 1855183690}
+  - {fileID: 2122919622}
   - {fileID: 646792595}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1338,7 +1338,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 152, y: -11}
+  m_AnchoredPosition: {x: 152, y: 1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1546720983
@@ -1361,13 +1361,20 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "- After picking up a weapon at the spawn point:\r\n  \xB7 U: Equip weapon\r\n 
-    \xB7 Z: Store weapon in inventory\r\n  \xB7 C: Draw/Holster weapon\r\n  \xB7
-    G: Drop weapon\r\n\r\n- Movement & Combat:\r\n  \xB7 WASD: Move\r\n  \xB7 Space:
-    Jump\n  \xB7 Mouse Wheel: Switch weapons\r\n  \xB7 Left Click: Fire weapon\r\n\r\n-
-    Win Condition: Eliminate all enemies\r\n- Lose Condition: Die when health reaches
-    0\r\n- Special Control: Aim at the up/down elevator buttons while your weapon
-    is holstered to use the elevator"
+  m_text: "Weapon & Item Operations (After picking up weapons at spawn points)\nU:
+    Equip the picked weapon\nZ: Store the equipped weapon into inventory\nC: Draw
+    / Holster the current held weapon\nG: Drop the current held weapon\nR: Reload
+    firearms\nMovement & Combat\nWASD: Character movement\nSpace: Jump\nMouse Scroll
+    Wheel: Switch stored weapons\nLeft Click: Fire the equipped weapon\nAdditional
+    shield mechanic: Equip a shield and hold Left Click to raise it for blocking
+    enemy bullets. As long as the shield has remaining durability, all bullet damage
+    will only consume shield durability instead of player health. If the shield is
+    not raised, broken, or not equipped, all damage directly reduces player health.
+    Shield durability cannot recover automatically.\nSpecial Elevator Rule\nYou can
+    only activate elevator up and down buttons when your weapon is holstered. Aim
+    your crosshair at the elevator buttons to use the elevator.\nVictory & Defeat
+    Conditions\nWin Condition: Eliminate all enemies on the map\nLose Condition:
+    The game ends when the player\u2019s health drops to 0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -1394,8 +1401,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

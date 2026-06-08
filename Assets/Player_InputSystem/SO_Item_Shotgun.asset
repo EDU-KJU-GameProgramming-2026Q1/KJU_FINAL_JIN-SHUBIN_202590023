@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SO_Item_Shotgun
   m_EditorClassIdentifier: 
   Name: Shotgun
-  FireRate: 0.05
+  FireRate: 1
   Type: 0
   Icon: {fileID: 0}
   Prefab: {fileID: 7001559533349128299, guid: 39842bb0efa24a241bc01f1bc5e15fd9, type: 3}

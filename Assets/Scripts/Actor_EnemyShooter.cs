@@ -39,20 +39,20 @@ public class Actor_EnemyShooter : MonoBehaviour
         if (FirePoint == null || Bullet == null) return;
 
         //Debug.Log($"{gameObject.name} 에너미: 탕! (라이플 연사)");
-        
+
         Vector3 pos = FirePoint.position;
         Quaternion dir = FirePoint.rotation;
 
         // 총알 프리팹 생성
         GameObject bulletClone = Instantiate(Bullet, pos, dir);
-        
+
         // 총알에 데미지 전달 (기존 Player 총알 재사용 가능)
         Actor_Bullet bulletScript = bulletClone.GetComponent<Actor_Bullet>();
         if (bulletScript != null)
         {
             bulletScript.SetDamage(BulletDamage);
         }
-        
+
         // 물리 효과로 총구 정면(forward) 방향으로 날아가게 처리
         Rigidbody rb = bulletClone.GetComponent<Rigidbody>();
         if (rb != null)
