@@ -9,6 +9,10 @@ public class EnemyHealth : MonoBehaviour
     [Header("Score Reward")]
     public int scoreReward = 100; // 처치 시 지급할 점수
 
+    [Header("血条设置")]
+    public GameObject healthBarPrefab;
+    private EnemyHealthBar healthBarComp;
+
     private bool isDead = false;
 
     void Awake()
@@ -19,7 +23,19 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
-        ScoreManager.Instance.currentDestroy = 0;        
+        ScoreManager.Instance.currentDestroy = 0;
+        // 生成头顶血条
+        SpawnHealthBar();
+    }
+
+    // 生成血条
+    void SpawnHealthBar()
+    {
+        if (healthBarPrefab == null) return;
+        GameObject barObj = Instantiate(healthBarPrefab, transform);
+        healthBarComp = barObj.GetComponent<EnemyHealthBar>();
+        healthBarComp.SetTarget(transform);
+        healthBarComp.UpdateHealthBar(currentHealth, maxHealth);
     }
 
     // 데미지를 받는 함수
@@ -29,6 +45,12 @@ public class EnemyHealth : MonoBehaviour
 
         currentHealth -= damageAmount;
         Debug.Log($"[{gameObject.name}] 데미지 입음! 남은 체력: {currentHealth}/{maxHealth}");
+
+        // 同步更新血条
+        if (healthBarComp != null)
+        {
+            healthBarComp.UpdateHealthBar(currentHealth, maxHealth);
+        }
 
         if (currentHealth <= 0)
         {
@@ -40,6 +62,12 @@ public class EnemyHealth : MonoBehaviour
     {
         isDead = true;
         Debug.Log($"🎯 [{gameObject.name}] 처치 완료! 점수 +{scoreReward}");
+
+        // 隐藏血条
+        if (healthBarComp != null)
+        {
+            healthBarComp.HideBar();
+        }
 
         // 싱글톤 ScoreManager를 호출하여 점수 반영
         if (ScoreManager.Instance != null)

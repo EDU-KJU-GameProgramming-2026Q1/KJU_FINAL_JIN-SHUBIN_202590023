@@ -17,6 +17,13 @@ public class Actor_Shotgun : InterfaceBase_IItem
     public int maxAmmoInMag = 8;
     public float reloadTime = 2f;
 
+    [Header("Audio Sound Options")]
+    public AudioClip fireAudioClip;
+    public AudioClip reloadAudioClip;
+    // 双音源分离，霰弹枪开火音高优先级不被挤掉
+    private AudioSource fireAudioSource;
+    private AudioSource reloadAudioSource;
+
     [Header("UI Reference")]
     public TextMeshProUGUI reloadTipText;
     public GameObject crosshair;
@@ -32,6 +39,42 @@ public class Actor_Shotgun : InterfaceBase_IItem
 
         if (reloadTipText != null) reloadTipText.text = "";
         if (crosshair != null) crosshair.SetActive(true);
+
+        // 开火音源
+        Transform fireAudioTrans = transform.Find("FireAudioSource");
+        if (fireAudioTrans == null)
+        {
+            GameObject fireObj = new GameObject("FireAudioSource");
+            fireObj.transform.SetParent(transform, false);
+            fireAudioSource = fireObj.AddComponent<AudioSource>();
+        }
+        else
+        {
+            fireAudioSource = fireAudioTrans.GetComponent<AudioSource>();
+        }
+        fireAudioSource.playOnAwake = false;
+        fireAudioSource.loop = false;
+        fireAudioSource.spatialBlend = 0.2f;
+        fireAudioSource.minDistance = 1;
+        fireAudioSource.maxDistance = 30;
+
+        // 换弹音源
+        Transform reloadAudioTrans = transform.Find("ReloadAudioSource");
+        if (reloadAudioTrans == null)
+        {
+            GameObject reloadObj = new GameObject("ReloadAudioSource");
+            reloadObj.transform.SetParent(transform, false);
+            reloadAudioSource = reloadObj.AddComponent<AudioSource>();
+        }
+        else
+        {
+            reloadAudioSource = reloadAudioTrans.GetComponent<AudioSource>();
+        }
+        reloadAudioSource.playOnAwake = false;
+        reloadAudioSource.loop = false;
+        reloadAudioSource.spatialBlend = 0.2f;
+        reloadAudioSource.minDistance = 1;
+        reloadAudioSource.maxDistance = 30;
     }
 
     void UpdateAmmoUI()
@@ -80,6 +123,12 @@ public class Actor_Shotgun : InterfaceBase_IItem
         currentAmmoInMag--;
         UpdateAmmoUI();
 
+        // 独立开火音源，不会被换弹/敌人枪声打断
+        if (fireAudioClip != null)
+        {
+            fireAudioSource.PlayOneShot(fireAudioClip);
+        }
+
         for (int i = 0; i < pelletCount; i++)
         {
             Quaternion rot = FirePoint.rotation * Quaternion.Euler(
@@ -110,6 +159,12 @@ public class Actor_Shotgun : InterfaceBase_IItem
             reloadTipText.text = "Shotgun Reloading...";
 
         if (crosshair != null) crosshair.SetActive(false);
+
+        if (reloadAudioClip != null)
+        {
+            reloadAudioSource.PlayOneShot(reloadAudioClip);
+            reloadTime = reloadAudioClip.length;
+        }
 
         Invoke(nameof(FinishReload), reloadTime);
     }

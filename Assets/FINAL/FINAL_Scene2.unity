@@ -1015,9 +1015,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2010418115}
     - target: {fileID: 6786064232151718904, guid: f1e79d1ca7593be43bca80d89f3cd8fe, type: 3}
+      propertyPath: fireAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 88273bdabe1c43146b449be511c02c64, type: 3}
+    - target: {fileID: 6786064232151718904, guid: f1e79d1ca7593be43bca80d89f3cd8fe, type: 3}
       propertyPath: reloadTipText
       value: 
       objectReference: {fileID: 296920977}
+    - target: {fileID: 6786064232151718904, guid: f1e79d1ca7593be43bca80d89f3cd8fe, type: 3}
+      propertyPath: reloadAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: aa1345cabba783648919e9efca06dd9c, type: 3}
     - target: {fileID: 8310511551988952302, guid: f1e79d1ca7593be43bca80d89f3cd8fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.163
@@ -3920,9 +3928,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2010418115}
     - target: {fileID: 514396547597542952, guid: f1f24dd6d3df64f36b668545704f3f3c, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 1443940243}
+    - target: {fileID: 514396547597542952, guid: f1f24dd6d3df64f36b668545704f3f3c, type: 3}
+      propertyPath: fireSound
+      value: 
+      objectReference: {fileID: 8300000, guid: dd3bcb5b4228e1441916c75ff5a518dc, type: 3}
+    - target: {fileID: 514396547597542952, guid: f1f24dd6d3df64f36b668545704f3f3c, type: 3}
+      propertyPath: reloadSound
+      value: 
+      objectReference: {fileID: 8300000, guid: aa1345cabba783648919e9efca06dd9c, type: 3}
+    - target: {fileID: 514396547597542952, guid: f1f24dd6d3df64f36b668545704f3f3c, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 1140185514427117624, guid: a35733c83237445caa0cc27adabc6be9, type: 3}
+    - target: {fileID: 514396547597542952, guid: f1f24dd6d3df64f36b668545704f3f3c, type: 3}
+      propertyPath: fireAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: dd3bcb5b4228e1441916c75ff5a518dc, type: 3}
+    - target: {fileID: 514396547597542952, guid: f1f24dd6d3df64f36b668545704f3f3c, type: 3}
       propertyPath: reloadTipText
       value: 
       objectReference: {fileID: 337104615}
+    - target: {fileID: 514396547597542952, guid: f1f24dd6d3df64f36b668545704f3f3c, type: 3}
+      propertyPath: reloadAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: aa1345cabba783648919e9efca06dd9c, type: 3}
     - target: {fileID: 4251047411945460085, guid: f1f24dd6d3df64f36b668545704f3f3c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.236
@@ -16475,6 +16507,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1439843680}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1443940243 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1978058804138630840, guid: f1f24dd6d3df64f36b668545704f3f3c, type: 3}
+  m_PrefabInstance: {fileID: 458225035}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1452262425
 GameObject:
   m_ObjectHideFlags: 0
@@ -18757,6 +18794,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 992631620}
     m_Modifications:
+    - target: {fileID: 135630759100987321, guid: a7d8b0a5dc6ab4c20906cb320f02d789, type: 3}
+      propertyPath: healthBarPrefab
+      value: 
+      objectReference: {fileID: 6398454938122810500, guid: 6d593106d27630849a052d2a69f55453, type: 3}
     - target: {fileID: 1718220906873060975, guid: a7d8b0a5dc6ab4c20906cb320f02d789, type: 3}
       propertyPath: m_Name
       value: Character_Enemy
@@ -18799,6 +18840,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5025583794679127462, guid: a7d8b0a5dc6ab4c20906cb320f02d789, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287810307343130009, guid: a7d8b0a5dc6ab4c20906cb320f02d789, type: 3}
+      propertyPath: PlayerLayer.m_Bits
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -22252,9 +22297,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1140185514427117624, guid: a35733c83237445caa0cc27adabc6be9, type: 3}
     - target: {fileID: 6273453121517301837, guid: 39842bb0efa24a241bc01f1bc5e15fd9, type: 3}
+      propertyPath: fireAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 37896e98c9e15864ca135a0229f89611, type: 3}
+    - target: {fileID: 6273453121517301837, guid: 39842bb0efa24a241bc01f1bc5e15fd9, type: 3}
       propertyPath: reloadTipText
       value: 
       objectReference: {fileID: 34541614}
+    - target: {fileID: 6273453121517301837, guid: 39842bb0efa24a241bc01f1bc5e15fd9, type: 3}
+      propertyPath: reloadAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: aa1345cabba783648919e9efca06dd9c, type: 3}
     - target: {fileID: 7001559533349128299, guid: 39842bb0efa24a241bc01f1bc5e15fd9, type: 3}
       propertyPath: m_Name
       value: Item_Shotgun

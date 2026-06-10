@@ -13,6 +13,12 @@ public class Actor_Pistol : InterfaceBase_IItem
     public int maxAmmoInMag = 12;
     public float reloadTime = 1f;
 
+    [Header("Audio Sound Options")]
+    public AudioClip fireAudioClip;
+    public AudioClip reloadAudioClip;
+    private AudioSource fireAudioSource;
+    private AudioSource reloadAudioSource;
+
     [Header("UI Reference")]
     public TextMeshProUGUI reloadTipText;
     public GameObject crosshair;
@@ -28,6 +34,42 @@ public class Actor_Pistol : InterfaceBase_IItem
 
         if (reloadTipText != null) reloadTipText.text = "";
         if (crosshair != null) crosshair.SetActive(true);
+
+        // 开火音源
+        Transform fireAudioTrans = transform.Find("FireAudioSource");
+        if (fireAudioTrans == null)
+        {
+            GameObject fireObj = new GameObject("FireAudioSource");
+            fireObj.transform.SetParent(transform, false);
+            fireAudioSource = fireObj.AddComponent<AudioSource>();
+        }
+        else
+        {
+            fireAudioSource = fireAudioTrans.GetComponent<AudioSource>();
+        }
+        fireAudioSource.playOnAwake = false;
+        fireAudioSource.loop = false;
+        fireAudioSource.spatialBlend = 0.2f;
+        fireAudioSource.minDistance = 1;
+        fireAudioSource.maxDistance = 30;
+
+        // 换弹音源
+        Transform reloadAudioTrans = transform.Find("ReloadAudioSource");
+        if (reloadAudioTrans == null)
+        {
+            GameObject reloadObj = new GameObject("ReloadAudioSource");
+            reloadObj.transform.SetParent(transform, false);
+            reloadAudioSource = reloadObj.AddComponent<AudioSource>();
+        }
+        else
+        {
+            reloadAudioSource = reloadAudioTrans.GetComponent<AudioSource>();
+        }
+        reloadAudioSource.playOnAwake = false;
+        reloadAudioSource.loop = false;
+        reloadAudioSource.spatialBlend = 0.2f;
+        reloadAudioSource.minDistance = 1;
+        reloadAudioSource.maxDistance = 30;
     }
 
     void UpdateAmmoUI()
@@ -70,6 +112,11 @@ public class Actor_Pistol : InterfaceBase_IItem
         currentAmmoInMag--;
         UpdateAmmoUI();
 
+        if (fireAudioClip != null)
+        {
+            fireAudioSource.PlayOneShot(fireAudioClip);
+        }
+
         Vector3 pos = FirePoint.position;
         Quaternion dir = FirePoint.rotation;
 
@@ -94,6 +141,12 @@ public class Actor_Pistol : InterfaceBase_IItem
             reloadTipText.text = "Pistol Reloading...";
 
         if (crosshair != null) crosshair.SetActive(false);
+
+        if (reloadAudioClip != null)
+        {
+            reloadAudioSource.PlayOneShot(reloadAudioClip);
+            reloadTime = reloadAudioClip.length;
+        }
 
         Invoke(nameof(FinishReload), reloadTime);
     }

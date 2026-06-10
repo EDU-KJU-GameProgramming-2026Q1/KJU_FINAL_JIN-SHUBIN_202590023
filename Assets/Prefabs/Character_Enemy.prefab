@@ -174,7 +174,7 @@ MonoBehaviour:
   RotationSpeed: 5
   PlayerLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
 --- !u!114 &6999959902925412830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +192,7 @@ MonoBehaviour:
   BulletSpeed: 100
   BulletDamage: 2
   FireRate: 0.2
+  enemyFireSound: {fileID: 8300000, guid: a8774db636ad8654cbcfb01428246bc6, type: 3}
 --- !u!114 &135630759100987321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   scoreReward: 100
+  healthBarPrefab: {fileID: 6398454938122810500, guid: 6d593106d27630849a052d2a69f55453, type: 3}
 --- !u!1 &1807145830061951624
 GameObject:
   m_ObjectHideFlags: 0

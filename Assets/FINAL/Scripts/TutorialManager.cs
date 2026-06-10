@@ -26,6 +26,7 @@ public class TutorialManager : MonoBehaviour
         // 保留你原本的绑定代码，完全不删除
         startButton.onClick.AddListener(ShowTutorial);
         continueButton.onClick.AddListener(GoToGameScene);
+        BGMManager.Instance.PlayGlobalBGM();
     }
 
     // 点击Start → 显示规则面板
